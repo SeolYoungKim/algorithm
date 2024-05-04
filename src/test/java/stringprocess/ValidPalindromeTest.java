@@ -7,31 +7,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 public class ValidPalindromeTest {
     public static boolean isPalindrome(String s) {
-        if (s.isEmpty()) {
-            return true;
-        }
+        String validString = s.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
+        String reversed = new StringBuilder(validString).reverse().toString();
 
-        int leftIdx = 0;
-        int rightIdx = s.length() - 1;
-
-        while (leftIdx < rightIdx) {
-            char left = s.charAt(leftIdx);
-            char right = s.charAt(rightIdx);
-
-            if (!Character.isLetterOrDigit(left)) {
-                leftIdx++;
-            } else if (!Character.isLetterOrDigit(right)) {
-                rightIdx--;
-            } else {
-                if (Character.toLowerCase(left) != Character.toLowerCase(right)) {
-                    return false;
-                }
-                leftIdx++;
-                rightIdx--;
-            }
-        }
-
-        return true;
+        return validString.equals(reversed);
     }
 
     @ParameterizedTest

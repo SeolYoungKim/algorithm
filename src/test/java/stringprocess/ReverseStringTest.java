@@ -7,15 +7,16 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 public class ReverseStringTest {
     public static char[] reverseString(char[] s) {
-        int midIdx = s.length / 2;
-        int lastIdx = s.length - 1;
+        int leftIdx = 0;
+        int rightIdx = s.length - 1;
 
-        for (int i = 0; i < midIdx; i++) {
-            char left = s[i];
-            char right = s[lastIdx - i];
+        while (leftIdx < rightIdx) {
+            char temp = s[leftIdx];
+            s[leftIdx] = s[rightIdx];
+            s[rightIdx] = temp;
 
-            s[i] = right;
-            s[lastIdx - i] = left;
+            leftIdx++;
+            rightIdx--;
         }
 
         return s;

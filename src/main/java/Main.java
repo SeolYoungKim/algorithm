@@ -1,5 +1,3 @@
-import java.math.BigInteger;
-
 /**
  * 백준 제출용 Main
  */

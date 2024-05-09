@@ -56,16 +56,8 @@ public class ReorderDataTest {
     }
 
     private static boolean isNumberLog(String log) {
-        String[] logArr = log.split(" ", 2);
-        char[] charArray = logArr[1].toCharArray();
-
-        for (char c : charArray) {
-            if (Character.isLetter(c) && !Character.isSpaceChar(c)) {
-                return false;
-            }
-        }
-
-        return true;
+        String[] logArr = log.split(" ");
+        return Character.isDigit(logArr[1].charAt(0));
     }
 
     public static Stream<Arguments> provideLogs() {

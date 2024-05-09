@@ -2,8 +2,9 @@ package stringprocess;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.stream.Stream;
@@ -23,36 +24,30 @@ public class ReorderDataTest {
      * 4. 숫자 로그는 입력 순서대로 한다
      */
     public static String[] reorderLogFiles(String[] logs) {
-        Queue<String> letterLogsQueue = new PriorityQueue<>(Comparator.comparing((String log) -> {
+        Comparator<String> letterLogComparator = Comparator.comparing((String log) -> {
                     String[] logArr = log.split(" ", 2);
                     return logArr[1];
                 }
         ).thenComparing((String log) -> {
             String[] logArr = log.split(" ", 2);
             return logArr[0];
-        }));
+        });
 
-        Queue<String> numberLogsQueue = new ArrayDeque<>();
+        List<String> letterLogs = new ArrayList<>();
+        List<String> numberLogs = new ArrayList<>();
 
         for (String log : logs) {
             if (isNumberLog(log)) {
-                numberLogsQueue.offer(log);
+                numberLogs.add(log);
             } else {
-                letterLogsQueue.offer(log);
+                letterLogs.add(log);
             }
         }
 
-        String[] results = new String[logs.length];
-        int letterLogsSize = letterLogsQueue.size();
-        for (int i = 0; i < letterLogsSize; i++) {
-            results[i] = letterLogsQueue.poll();
-        }
+        letterLogs.sort(letterLogComparator);
+        letterLogs.addAll(numberLogs);
 
-        for (int i = letterLogsSize; i < logs.length; i++) {
-            results[i] = numberLogsQueue.poll();
-        }
-
-        return results;
+        return letterLogs.toArray(new String[0]);
     }
 
     private static boolean isNumberLog(String log) {

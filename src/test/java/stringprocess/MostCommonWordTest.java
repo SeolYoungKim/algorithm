@@ -20,7 +20,7 @@ import org.junit.jupiter.params.provider.MethodSource;
  */
 public class MostCommonWordTest {
     public static String mostCommonWord(String paragraph, String[] banned) {
-        String[] words = paragraph.split("[\\s!?',;.]+");
+        String[] words = paragraph.split("\\W+");
 
         Map<String, Integer> map = new HashMap<>();
         for (String word : words) {
@@ -54,7 +54,8 @@ public class MostCommonWordTest {
     @Test
     void test() {
         String str = "a b! c? 'd' e,f; g.";
-        String[] split = str.split("[\\s!?',;.]+");
+//        String[] split = str.split("[\\s!?',;.]+");
+        String[] split = str.split("\\W+");
         assertThat(split).containsExactly("a", "b", "c", "d", "e", "f", "g");
     }
 }

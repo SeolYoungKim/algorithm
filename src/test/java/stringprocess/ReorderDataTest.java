@@ -23,7 +23,7 @@ public class ReorderDataTest {
      * 3. 문자가 동일한 경우 식별자 순으로 한다
      * 4. 숫자 로그는 입력 순서대로 한다
      */
-    public static String[] reorderLogFiles(String[] logs) {
+    public String[] reorderLogFiles(String[] logs) {
         Comparator<String> letterLogComparator = Comparator.comparing((String log) -> {
                     String[] logArr = log.split(" ", 2);
                     return logArr[1];

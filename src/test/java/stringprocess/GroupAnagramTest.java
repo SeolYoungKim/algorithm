@@ -17,7 +17,7 @@ import org.junit.jupiter.params.provider.MethodSource;
  * <a href="https://leetcode.com/problems/group-anagrams/description/">49.GroupAnagrams</a>
  */
 public class GroupAnagramTest {
-    public static List<List<String>> groupAnagrams(String[] strs) {
+    public List<List<String>> groupAnagrams(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
         for (String str : strs) {  // 최대 길이 10,000
             char[] charArray = str.toCharArray();  // 최대 길이 100

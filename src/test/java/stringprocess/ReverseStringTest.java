@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class ReverseStringTest {
-    public static char[] reverseString(char[] s) {
+    public char[] reverseString(char[] s) {
         int leftIdx = 0;
         int rightIdx = s.length - 1;
 

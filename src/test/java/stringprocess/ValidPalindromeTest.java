@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class ValidPalindromeTest {
-    public static boolean isPalindrome(String s) {
+    public boolean isPalindrome(String s) {
         String validString = s.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
         String reversed = new StringBuilder(validString).reverse().toString();
 

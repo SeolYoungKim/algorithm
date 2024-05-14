@@ -19,7 +19,7 @@ import org.junit.jupiter.params.provider.MethodSource;
  * <a href="https://leetcode.com/problems/most-common-word/description/">819.MostCommonWord</a>
  */
 public class MostCommonWordTest {
-    public static String mostCommonWord(String paragraph, String[] banned) {
+    public String mostCommonWord(String paragraph, String[] banned) {
         String[] words = paragraph.split("\\W+");
 
         Map<String, Integer> map = new HashMap<>();

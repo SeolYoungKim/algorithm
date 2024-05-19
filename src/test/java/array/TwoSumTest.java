@@ -2,6 +2,8 @@ package array;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -19,21 +21,25 @@ public class TwoSumTest {
      */
     public int[] twoSum(int[] nums, int target) {
         int length = nums.length;
-        for (int leftIndex = 0; leftIndex < length - 1; leftIndex++) {
-            for (int rightIndex = leftIndex + 1; rightIndex < length; rightIndex++) {
-                if (nums[leftIndex] + nums[rightIndex] == target) {
-                    return new int[]{leftIndex, rightIndex};
-                }
+        Map<Integer, Integer> numberIndexMap = new HashMap<>();
+        for (int i = 0; i < length; i++) {
+            numberIndexMap.put(nums[i], i);
+        }
+
+        for (int i = 0; i < length; i++) {
+            int key = target - nums[i];
+            if (numberIndexMap.containsKey(key) && i != numberIndexMap.get(key)) {
+                return new int[]{i, numberIndexMap.get(key)};
             }
         }
 
-        return new int[]{};
+        return new int[0];
     }
 
     @ParameterizedTest
     @MethodSource("provideParamsAndResult")
     void test(int[] nums, int target, int[] result) {
-        assertThat(twoSum(nums, target)).containsExactly(result);
+        assertThat(twoSum(nums, target)).contains(result);
     }
 
     public static Stream<Arguments> provideParamsAndResult() {

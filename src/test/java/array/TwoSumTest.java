@@ -23,14 +23,12 @@ public class TwoSumTest {
         int length = nums.length;
         Map<Integer, Integer> numberIndexMap = new HashMap<>();
         for (int i = 0; i < length; i++) {
-            numberIndexMap.put(nums[i], i);
-        }
-
-        for (int i = 0; i < length; i++) {
             int key = target - nums[i];
-            if (numberIndexMap.containsKey(key) && i != numberIndexMap.get(key)) {
-                return new int[]{i, numberIndexMap.get(key)};
+            if (numberIndexMap.containsKey(key)) {
+                return new int[]{numberIndexMap.get(key), i};
             }
+
+            numberIndexMap.put(nums[i], i);
         }
 
         return new int[0];

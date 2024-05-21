@@ -37,7 +37,7 @@ public class GroupAnagramTest {
         List<List<String>> actual = groupAnagrams(input);
         actual.forEach(list -> list.sort(Comparator.naturalOrder()));
         expected.forEach(list -> list.sort(Comparator.naturalOrder()));
-        assertThat(actual).usingElementComparator(Comparator.comparing(List::toString)).containsExactlyInAnyOrderElementsOf(expected);
+        assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
     }
 
     public static Stream<Arguments> provideWords() {

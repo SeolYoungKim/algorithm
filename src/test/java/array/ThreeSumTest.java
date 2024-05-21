@@ -36,25 +36,30 @@ public class ThreeSumTest {
             int leftIdx = i + 1;
             int rightIdx = length - 1;
             while (leftIdx < rightIdx) {
-                int leftNum = nums[leftIdx];
-                int rightNum = nums[rightIdx];
+                int sum = nums[leftIdx] + nums[rightIdx] + target;
 
-                if (leftNum + rightNum < -target) {
+                if (sum < 0) {
                     leftIdx++;
                     continue;
                 }
 
-                if (leftNum + rightNum > -target) {
+                if (sum > 0) {
                     rightIdx--;
                     continue;
                 }
 
-                results.add(Arrays.asList(target, leftNum, rightNum));
-                leftIdx++;
+                results.add(Arrays.asList(target, nums[leftIdx], nums[rightIdx]));
 
-                do {
+                // 중복 값 건너 뛰기
+                while (leftIdx < rightIdx && nums[leftIdx] == nums[leftIdx + 1]) {
+                    leftIdx++;
+                }
+                while (leftIdx < rightIdx && nums[rightIdx] == nums[rightIdx - 1]) {
                     rightIdx--;
-                } while (leftIdx < rightIdx && nums[rightIdx] == nums[rightIdx + 1]);
+                }
+
+                leftIdx++;
+                rightIdx--;
             }
         }
 

@@ -2,8 +2,6 @@ package array;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,32 +19,21 @@ public class ProductOfArrayExceptSelfTest {
      */
     public int[] productExceptSelf(int[] nums) {
         int length = nums.length;
-        // 인덱스 기준으로 왼쪽, 오른쪽 따로 계산
-        // left
-        Map<Integer, Integer> leftMap = new HashMap<>();
-        leftMap.put(0, 1);
+        int[] result = new int[length];
 
         int left = 1;
-        for (int i = 1; i < length; i++) {
-            left *= nums[i - 1];
-            leftMap.put(i, left);
+        for (int i = 0; i < length; i++) {
+            result[i] = left;
+            left *= nums[i];
         }
-
-        // right
-        Map<Integer, Integer> rightMap = new HashMap<>();
-        rightMap.put(length - 1, 1);
 
         int right = 1;
-        for (int i = length - 2; i >= 0; i--) {
-            right *= nums[i + 1];
-            rightMap.put(i, right);
+        for (int i = length - 1; i >= 0; i--) {
+            result[i] *= right;
+            right *= nums[i];
         }
 
-        for (int i = 0; i < length; i++) {
-            nums[i] = leftMap.get(i) * rightMap.get(i);
-        }
-
-        return nums;
+        return result;
     }
 
     @ParameterizedTest

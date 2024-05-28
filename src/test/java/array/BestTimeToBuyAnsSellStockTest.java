@@ -12,21 +12,14 @@ import org.junit.jupiter.params.provider.MethodSource;
  */
 public class BestTimeToBuyAnsSellStockTest {
     public int maxProfit(int[] prices) {
-        int length = prices.length;
-        int[] lowPoint = new int[length];
-
-        int min = Integer.MAX_VALUE;
-        for (int i = 0; i < length; i++) {
-            min = Math.min(min, prices[i]);
-            lowPoint[i] = min;
+        int buy = Integer.MAX_VALUE;
+        int sell = 0;
+        for (int price : prices) {
+            buy = Math.min(buy, price);
+            sell = Math.max(sell, price - buy);
         }
 
-        int max = Integer.MIN_VALUE;
-        for (int i = 0; i < length; i++) {
-            max = Math.max(max, prices[i] - lowPoint[i]);
-        }
-
-        return max;
+        return sell;
     }
 
     @ParameterizedTest

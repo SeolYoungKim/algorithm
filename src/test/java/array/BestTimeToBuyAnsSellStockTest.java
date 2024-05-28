@@ -9,6 +9,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/">121.BestTimeToBuyAnsSellStock</a>
+ * <p>해당 문제는 시각화를 하면 더 쉽다.</p>
+ * <pre>
+ *     <img src="img.png">
+ * </pre>
+ *
  */
 public class BestTimeToBuyAnsSellStockTest {
     public int maxProfit(int[] prices) {

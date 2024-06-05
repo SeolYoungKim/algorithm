@@ -2,6 +2,8 @@ package linkedlist;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -26,38 +28,22 @@ public class PalindromeLinkedListTest {
     }
 
     public boolean isPalindrome(ListNode head) {
-        if (head.next == null) {
-            return true;
-        }
-
-        ListNode reverseHead = reverse(head);
-
-        while (head.next != null && reverseHead.next != null) {
-            if (head.val != reverseHead.val) {
-                return false;
-            }
-            head = head.next;
-            reverseHead = reverseHead.next;
-        }
-
-        return head.val == reverseHead.val;
-    }
-
-    public ListNode reverse(ListNode head) {
-        ListNode reverseNode = new ListNode(head.val);
-
-        ListNode node = head.next;
-        while (node.next != null) {
-            ListNode newNode = new ListNode(node.val);
-            newNode.next = reverseNode;
-            reverseNode = newNode;
+        Deque<Integer> stack = new ArrayDeque<>();
+        ListNode node = head;
+        while (node != null) {
+            stack.push(node.val);
             node = node.next;
         }
-        ListNode lastNode = new ListNode(node.val);
-        lastNode.next = reverseNode;
-        reverseNode = lastNode;
 
-        return reverseNode;
+        while (!stack.isEmpty()) {
+            if (head.val != stack.pop()) {
+                return false;
+            }
+
+            head = head.next;
+        }
+
+        return true;
     }
 
     @Test
@@ -72,6 +58,12 @@ public class PalindromeLinkedListTest {
         node3.next = node4;
 
         assertThat(isPalindrome(node1)).isTrue();
+    }
+
+    @Test
+    void testTrue2() {
+        ListNode listNode = new ListNode(1);
+        assertThat(isPalindrome(listNode)).isTrue();
     }
 
     @Test

@@ -2,8 +2,6 @@ package linkedlist;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -28,32 +26,42 @@ public class PalindromeLinkedListTest {
     }
 
     public boolean isPalindrome(ListNode head) {
-        List<Integer> list = new ArrayList<>();
-
-        ListNode node = head;
-        while (node.next != null) {
-            list.add(node.val);
-            node = node.next;
+        if (head.next == null) {
+            return true;
         }
-        list.add(node.val);
 
-        int leftIdx = 0;
-        int rightIdx = list.size() - 1;
+        ListNode reverseHead = reverse(head);
 
-        while (leftIdx < rightIdx) {
-            if (!list.get(leftIdx).equals(list.get(rightIdx))) {
+        while (head.next != null && reverseHead.next != null) {
+            if (head.val != reverseHead.val) {
                 return false;
             }
-
-            leftIdx++;
-            rightIdx--;
+            head = head.next;
+            reverseHead = reverseHead.next;
         }
 
-        return true;
+        return head.val == reverseHead.val;
+    }
+
+    public ListNode reverse(ListNode head) {
+        ListNode reverseNode = new ListNode(head.val);
+
+        ListNode node = head.next;
+        while (node.next != null) {
+            ListNode newNode = new ListNode(node.val);
+            newNode.next = reverseNode;
+            reverseNode = newNode;
+            node = node.next;
+        }
+        ListNode lastNode = new ListNode(node.val);
+        lastNode.next = reverseNode;
+        reverseNode = lastNode;
+
+        return reverseNode;
     }
 
     @Test
-    void test() {
+    void testTrue() {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
         ListNode node3 = new ListNode(2);
@@ -64,5 +72,19 @@ public class PalindromeLinkedListTest {
         node3.next = node4;
 
         assertThat(isPalindrome(node1)).isTrue();
+    }
+
+    @Test
+    void testFalse() {
+        ListNode node1 = new ListNode(1);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(3);
+        ListNode node4 = new ListNode(4);
+
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+
+        assertThat(isPalindrome(node1)).isFalse();
     }
 }

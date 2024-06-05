@@ -28,19 +28,19 @@ public class PalindromeLinkedListTest {
     }
 
     public boolean isPalindrome(ListNode head) {
-        Deque<Integer> stack = new ArrayDeque<>();
+        Deque<Integer> deque = new ArrayDeque<>();
         ListNode node = head;
         while (node != null) {
-            stack.push(node.val);
+            deque.add(node.val);
             node = node.next;
         }
 
-        while (!stack.isEmpty()) {
-            if (head.val != stack.pop()) {
+        while (!deque.isEmpty() && deque.size() > 1) {
+            Integer left = deque.removeFirst();
+            Integer right = deque.removeLast();
+            if (!left.equals(right)) {
                 return false;
             }
-
-            head = head.next;
         }
 
         return true;

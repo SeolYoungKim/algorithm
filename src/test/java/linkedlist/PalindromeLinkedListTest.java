@@ -2,8 +2,6 @@ package linkedlist;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -28,19 +26,36 @@ public class PalindromeLinkedListTest {
     }
 
     public boolean isPalindrome(ListNode head) {
-        Deque<Integer> deque = new ArrayDeque<>();
-        ListNode node = head;
-        while (node != null) {
-            deque.add(node.val);
-            node = node.next;
+        ListNode fast = head;
+        ListNode slow = head;
+
+        // 러너 이동
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
         }
 
-        while (!deque.isEmpty() && deque.size() > 1) {
-            Integer left = deque.removeFirst();
-            Integer right = deque.removeLast();
-            if (!left.equals(right)) {
+        // 입력값이 홀수일 때는 fast가 한칸을 덜 이동하여 null이 아닐 것이다
+        if (fast != null) {
+            // 입력값이 홀수일 때는 slow를 한칸 이동시켜야 한다 (중앙을 빗겨나가기 위함)
+            slow = slow.next;
+        }
+
+        // 중간 지점에 도달한 slow 러너를 기준으로 역순으로 연결 리스트를 만들어 나간다
+        ListNode reverse = null;
+        while (slow != null) {
+            ListNode next = slow.next;
+            slow.next = reverse;
+            reverse = slow;
+            slow = next;
+        }
+
+        while (reverse != null) {
+            if (reverse.val != head.val) {
                 return false;
             }
+            reverse = reverse.next;
+            head = head.next;
         }
 
         return true;

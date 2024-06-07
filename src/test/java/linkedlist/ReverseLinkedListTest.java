@@ -25,15 +25,23 @@ public class ReverseLinkedListTest {
     }
 
     public ListNode reverseList(ListNode head) {
-        ListNode reverse = null;
-        while (head != null) {
-            ListNode next = head.next;
-            head.next = reverse;
-            reverse = head;
-            head = next;
+        return reverse(head, null);
+    }
+
+    private ListNode reverse(ListNode curr, ListNode prev) {
+        // 현재 노드가 null이면 리턴
+        if (curr == null) {
+            return prev;
         }
 
-        return reverse;
+        // 현재 노드의 다음 노드
+        ListNode next = curr.next;
+
+        // 현재 노드의 다음을 이전 노드로 지정
+        curr.next = prev;
+
+        // 다음 노드와 현재 노드를 파라미터로 하여 재귀 호출
+        return reverse(next, curr);
     }
 
     @Test

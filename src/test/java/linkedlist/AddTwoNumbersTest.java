@@ -1,6 +1,5 @@
 package linkedlist;
 
-import java.math.BigInteger;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -26,34 +25,44 @@ public class AddTwoNumbersTest {
     }
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        BigInteger resultNumber = convertToNumber(l1).add(convertToNumber(l2));
-        String resultStr = String.valueOf(resultNumber);  // 807
+        ListNode tempNode = new ListNode(0);  // 값 계산용 노드
+        ListNode root = tempNode;  // 첫 번째 노드
 
-        ListNode head = null;
-        ListNode node = null;
-        for (int i = resultStr.length() - 1; i >= 0 ; i--) {
-            int num = Character.getNumericValue(resultStr.charAt(i));
-            ListNode newNode = new ListNode(num);
-            if (node != null) {
-                node.next = newNode;
-            } else {
-                head = newNode;
+        // 자릿수 합, 자리올림수, 나머지 저장 변수
+        int sum = 0;
+        int carry = 0;
+        int remainder = 0;
+
+        // 모든 연결리스트를 끝까지 순회 & 자리올림수도 0이 될 때까지 진행
+        while (l1 != null || l2 != null || carry != 0) {
+            sum = 0;
+            // 첫 번째 연결 리스트 합산
+            if (l1 != null) {
+                sum += l1.val;
+                l1 = l1.next;
             }
 
-            node = newNode;
+            // 두 번째 연결 리스트 합산
+            if (l2 != null) {
+                sum += l2.val;
+                l2 = l2.next;
+            }
+
+            // 노드의 값으로 사용할 나머지 계산
+            remainder = (sum + carry) % 10;
+
+            // 자리올림수 계산
+            carry = (sum + carry) / 10;
+
+            // 계산 결과를 저장한다. tempNode는 임시 노드가 하나 있었기 때문에 next에 결과를 저장해줘야 한다
+            tempNode.next = new ListNode(remainder);
+
+            // 계산할 노드를 다음으로 이동
+            tempNode = tempNode.next;
         }
 
-        return head;
-    }
-
-    public BigInteger convertToNumber(ListNode l1) {
-        StringBuilder sb1 = new StringBuilder();
-        while (l1 != null) {
-            sb1.append(l1.val);
-            l1 = l1.next;
-        }
-
-        return new BigInteger(sb1.reverse().toString());
+        // 임시 노드 이후의 노드를 반환
+        return root.next;
     }
 
     @Test

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * <a href="https://leetcode.com/problems/add-two-numbers/description/">2.AddTwoNumbers</a>
- * <img src="img.png" alt="Image description">
  */
 public class AddTwoNumbersTest {
     public static class ListNode {

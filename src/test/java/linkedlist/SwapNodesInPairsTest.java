@@ -23,20 +23,36 @@ public class SwapNodesInPairsTest {
         }
     }
 
+    /**
+     * <img src="img_1.png" alt="Image description">
+     */
     public ListNode swapPairs(ListNode head) {
-        ListNode node = head;
+        // 값을 계산할 임시 노드
+        ListNode node = new ListNode(0);
 
-        while (node != null && node.next != null) {
-            int val = node.val;
+        // 임시 노드를 첫 번째 노드로 선언
+        ListNode root = node;
 
-            ListNode next = node.next;
-            node.val = next.val;
-            next.val = val;
+        // 다음 노드를 head로 지정
+        node.next = head;
 
-            node = next.next;
+        // 다음 노드와 다음.다음 노드가 있으면 반복
+        while (node.next != null && node.next.next != null) {
+            // node -> a -> b -> c
+            ListNode a = node.next;
+            ListNode b = node.next.next;
+
+            // swap
+            // swap 결과 : node -> b -> a -> c
+            a.next = b.next;     // a -> c
+            node.next = b;       // node -> b
+            node.next.next = a;  // b -> a
+
+            // 두 칸 앞으로 이동
+            node = node.next.next;  // c -> ...
         }
 
-        return head;
+        return root.next;
     }
 
 

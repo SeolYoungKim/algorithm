@@ -32,33 +32,23 @@ public class OddEvenLinkedListTest {
     }
 
     public ListNode oddEvenList(ListNode head) {
-        if (head == null || head.next == null) {
-            return head;
+        if (head == null) {
+            return null;
         }
 
-        ListNode node = head;
-        ListNode evenRoot = new ListNode(0);
-        ListNode even = evenRoot;
+        ListNode odd = head;
+        ListNode even = head.next;
+        ListNode evenRoot = even;
 
-        while (node != null && node.next != null) {
-            ListNode next = node.next;
-            even.next = next;
-            even = next;
+        while (even != null && even.next != null) {
+            odd.next = odd.next.next;
+            even.next = even.next.next;
 
-            node.next = next.next;
-            node = next.next;
+            odd = odd.next;
+            even = even.next;
         }
 
-        if (node != null) {
-            even.next = null;
-        }
-
-        ListNode tail = head;
-        while (tail.next != null) {
-            tail = tail.next;
-        }
-
-        tail.next = evenRoot.next;
+        odd.next = evenRoot;
         return head;
     }
 
@@ -77,7 +67,7 @@ public class OddEvenLinkedListTest {
 
         // expected = [1,3,5,2,4]
         ListNode listNode = oddEvenList(node1);
-//        printNode(listNode);
+        printNode(listNode);
     }
 
     private void printNode(ListNode listNode) {

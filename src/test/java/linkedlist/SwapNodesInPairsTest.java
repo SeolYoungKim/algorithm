@@ -55,6 +55,27 @@ public class SwapNodesInPairsTest {
         return root.next;
     }
 
+    /**
+     * <img src="img_2.png" alt="Image description">
+     */
+    public ListNode swapPairsByRecursion(ListNode head) {
+        // 현재 노드와 다음 노드가 있다면 반복
+        if (head != null && head.next != null) {
+            // 다음 노드
+            ListNode next = head.next;
+
+            // 다음 다음 노드를 파라미터로 전달하고 스왑된 값을 리턴받음
+            head.next = swapPairsByRecursion(head.next.next);
+
+            // 다음 다음 노드를 현재 노드로 지정
+            next.next = head;
+
+            // 다음 노드 리턴
+            return next;
+        }
+
+        return head;
+    }
 
     @Test
     void testTrue() {
@@ -67,7 +88,7 @@ public class SwapNodesInPairsTest {
         node2.next = node3;
         node3.next = node4;
 
-        ListNode listNode = swapPairs(node1);
+        ListNode listNode = swapPairsByRecursion(node1);
         while (listNode != null) {
             System.out.println(listNode.val);
             listNode = listNode.next;

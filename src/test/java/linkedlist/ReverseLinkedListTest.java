@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * <a href="https://leetcode.com/problems/reverse-linked-list/">206.ReverseLinkedList</a>
- * <img src="img.png" alt="Image description">
  */
 public class ReverseLinkedListTest {
     public static class ListNode {

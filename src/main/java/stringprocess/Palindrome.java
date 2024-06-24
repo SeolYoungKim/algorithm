@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 /**
- * <a href="https://www.acmicpc.net/problem/17609">백준 17609번</a>
+ * <a href="https://www.acmicpc.net/problem/17609">17609</a>
  */
 public class Palindrome {
     public static void main(String[] args) throws IOException {

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * <a href="https://www.acmicpc.net/problem/15927">백준 15927번</a>
+ * <a href="https://www.acmicpc.net/problem/15927">15927</a>
  */
 public class NotPalindrome {
     public static void main(String[] args) throws IOException {

@@ -8,51 +8,32 @@ import org.junit.jupiter.api.Test;
  * <a href="https://leetcode.com/problems/implement-stack-using-queues/submissions/1305796076/">225.Implement Stack using Queues</a>
  */
 class MyStackTest {
-    private final Queue<Integer> in;
-    private final Queue<Integer> out;
+    private final Queue<Integer> queue;
 
     public MyStackTest() {
-        this.in = new ArrayDeque<>();
-        this.out = new ArrayDeque<>();
+        this.queue = new ArrayDeque<>();
     }
     
     public void push(int x) {
-        in.offer(x);
+        // 큐의 가장 마지막에 위치함
+        queue.offer(x);
+
+        // 나머지를 방금 들어온 요소의 뒤로 보냄
+        for (int i = 1; i < queue.size(); i++) {
+            queue.offer(queue.poll());
+        }
     }
     
     public int pop() {
-        moveInToOut();
-        Integer last = in.poll();
-        moveOutToIn();
-
-        return last;
+        return queue.poll();
     }
 
-    private void moveInToOut() {
-        int size = in.size();
-        for (int i = 0; i < size - 1; i++) {
-            out.offer(in.poll());
-        }
-    }
-
-    private void moveOutToIn() {
-        int size = out.size();
-        for (int i = 0; i < size; i++) {
-            in.offer(out.poll());
-        }
-    }
-
-    public int top() {
-        moveInToOut();
-        Integer last = in.peek();
-        out.offer(in.poll());
-        moveOutToIn();
-
-        return last;
+    int top() {
+        return queue.peek();
     }
     
     public boolean empty() {
-        return in.isEmpty();
+        return queue.isEmpty();
     }
 
     @Test

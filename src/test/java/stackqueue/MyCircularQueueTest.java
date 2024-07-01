@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class MyCircularQueueTest {
     static class MyCircularQueue {
         private final int[] array;
-        private int firstIdx;
+        private int frontIdx;
         private int insertIdx;
         private int size;
 
@@ -22,7 +22,7 @@ class MyCircularQueueTest {
 
         // 삽입
         public boolean enQueue(int value) {
-            if (size == array.length) {
+            if (isFull()) {
                 return false;
             }
 
@@ -31,21 +31,22 @@ class MyCircularQueueTest {
             insertIdx = (insertIdx + 1) % array.length;
             return true;
         }
+
         // 삭제
         public boolean deQueue() {
-            if (size <= 0) {
+            if (isEmpty()) {
                 return false;
             }
 
-            array[firstIdx] = -1;
-            firstIdx = (firstIdx + 1) % array.length;
+            array[frontIdx] = -1;
+            frontIdx = (frontIdx + 1) % array.length;
             size--;
             return true;
         }
 
         // 맨앞
         public int Front() {
-            return array[firstIdx];
+            return array[frontIdx];
         }
 
         // 맨뒤
@@ -54,7 +55,8 @@ class MyCircularQueueTest {
                 return array[array.length - 1];
             }
 
-            return array[insertIdx - 1];
+            int rearIdx = insertIdx - 1;
+            return array[rearIdx];
         }
 
         public boolean isEmpty() {
@@ -71,13 +73,13 @@ class MyCircularQueueTest {
         MyCircularQueue myCircularQueue = new MyCircularQueue(5);
         myCircularQueue.enQueue(1);
 
-        assertThat(myCircularQueue.firstIdx).isEqualTo(0);
+        assertThat(myCircularQueue.frontIdx).isEqualTo(0);
         assertThat(myCircularQueue.size).isEqualTo(1);
         assertThat(myCircularQueue.insertIdx).isEqualTo(1);
         assertThat(myCircularQueue.array).contains(1);
 
         myCircularQueue.enQueue(2);
-        assertThat(myCircularQueue.firstIdx).isEqualTo(0);
+        assertThat(myCircularQueue.frontIdx).isEqualTo(0);
         assertThat(myCircularQueue.size).isEqualTo(2);
         assertThat(myCircularQueue.insertIdx).isEqualTo(2);
         assertThat(myCircularQueue.array).contains(1, 2);
@@ -87,7 +89,7 @@ class MyCircularQueueTest {
         myCircularQueue.enQueue(5);
         boolean isSuccess = myCircularQueue.enQueue(6);
 
-        assertThat(myCircularQueue.firstIdx).isEqualTo(0);
+        assertThat(myCircularQueue.frontIdx).isEqualTo(0);
         assertThat(myCircularQueue.size).isEqualTo(5);
         assertThat(myCircularQueue.insertIdx).isEqualTo(0);
         assertThat(myCircularQueue.array).contains(1, 2, 3, 4, 5);
@@ -104,7 +106,7 @@ class MyCircularQueueTest {
         myCircularQueue.enQueue(5);
 
         myCircularQueue.deQueue();
-        assertThat(myCircularQueue.firstIdx).isEqualTo(1);
+        assertThat(myCircularQueue.frontIdx).isEqualTo(1);
         assertThat(myCircularQueue.size).isEqualTo(4);
         assertThat(myCircularQueue.insertIdx).isEqualTo(0);
         assertThat(myCircularQueue.array).contains(2, 3, 4, 5);
@@ -112,14 +114,14 @@ class MyCircularQueueTest {
         myCircularQueue.deQueue();
         myCircularQueue.deQueue();
         myCircularQueue.deQueue();
-        assertThat(myCircularQueue.firstIdx).isEqualTo(4);
+        assertThat(myCircularQueue.frontIdx).isEqualTo(4);
         assertThat(myCircularQueue.size).isEqualTo(1);
         assertThat(myCircularQueue.insertIdx).isEqualTo(0);
         assertThat(myCircularQueue.array).contains(5);
 
         myCircularQueue.deQueue();
         boolean isSuccess = myCircularQueue.deQueue();
-        assertThat(myCircularQueue.firstIdx).isEqualTo(0);
+        assertThat(myCircularQueue.frontIdx).isEqualTo(0);
         assertThat(myCircularQueue.size).isEqualTo(0);
         assertThat(myCircularQueue.insertIdx).isEqualTo(0);
         assertThat(myCircularQueue.array).containsOnly(-1);

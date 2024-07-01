@@ -13,25 +13,27 @@ class MyQueue {
     }
     
     public void push(int x) {
-        while (!in.isEmpty()) {
-            out.push(in.pop());
-        }
-
         in.push(x);
-        while (!out.isEmpty()) {
-            in.push(out.pop());
-        }
     }
     
     public int pop() {
-        return in.pop();
+        peek();
+        return out.pop();
     }
     
     public int peek() {
-        return in.peek();
+        // in 스택을 뒤집는 작업 (결과물이 out)
+        // out이 비었을 때만 진행 (한번도 peek() or pop() 을 호출하지 않은 경우)
+        if (out.isEmpty()) {
+            while (!in.isEmpty()) {
+                out.push(in.pop());
+            }
+        }
+
+        return out.peek();
     }
     
     public boolean empty() {
-        return in.isEmpty();
+        return in.isEmpty() && out.isEmpty();
     }
 }

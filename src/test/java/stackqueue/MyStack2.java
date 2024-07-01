@@ -1,6 +1,6 @@
-package stack;
+package stackqueue;
 
-public class MyStack {
+public class MyStack2 {
     private static class Node {
         int item;
         Node next;

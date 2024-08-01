@@ -1,9 +1,8 @@
 package hash;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 /**
  * <a href="https://leetcode.com/problems/top-k-frequent-elements/">347</a>
@@ -15,11 +14,14 @@ public class TopKTest {
             numToCount.put(num, numToCount.getOrDefault(num, 0) + 1);
         }
 
-        return numToCount.entrySet()
-                .stream()
-                .sorted(Comparator.comparing(entry -> entry.getValue(), Collections.reverseOrder()))
-                .limit(k)
-                .mapToInt(entry -> entry.getKey())
-                .toArray();
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> b[1] - a[1]);
+        numToCount.forEach((key, value) -> pq.offer(new int[]{key, value}));
+
+        int[] result = new int[k];
+        for (int i = 0; i < k; i++) {
+            result[i] = pq.poll()[0];
+        }
+
+        return result;
     }
 }
